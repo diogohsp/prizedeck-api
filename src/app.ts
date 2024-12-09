@@ -1,14 +1,16 @@
 import fastify from "fastify";
 import { PrismaClient } from "@prisma/client";
+import { appRoutes } from "./http/routes";
 
 export const app = fastify()
 
-const prisma = new PrismaClient()
+app.register(appRoutes)
 
-prisma.prize .create({
-    data: {
-        name: 'teste',
-        quantity: '',
-        id
-    }
-})
+// const prisma = new PrismaClient()
+
+// prisma.prize.create({
+//     data: {
+//         name: 'teste',
+//         quantity: 1,
+//     }
+// })

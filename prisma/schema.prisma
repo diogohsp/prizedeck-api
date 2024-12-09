@@ -18,7 +18,7 @@ datasource db {
 
 model Prize {
   id       String @id @default(uuid())
-  name     String
+  name     String @unique
   quantity Int
 
   @@map("prizes")
