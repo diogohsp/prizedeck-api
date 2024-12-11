@@ -28,7 +28,8 @@ export class InMemoryPrizeRepository implements PrizesRepository {
         const prize = {
             id: 'prize-1',
             name: data.name,
-            quantity: data.quantity
+            quantity: data.quantity,
+            code: 'teste',
         }
 
         this.items.push(prize)

@@ -28,7 +28,7 @@ model Prize {
 
 model DatePrize {
   id            String   @id @default(uuid())
-  dateHourPrize DateTime
+  dateHourPrize DateTime @unique
   awarded       Boolean  @default(false)
 
   prize      Prize  @relation(fields: [prize_code], references: [code])

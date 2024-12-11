@@ -1,6 +1,5 @@
 import { expect, describe, it, test } from 'vitest'
 import { RegisterPrizeService } from './registerPrize'
-import { PrismaPrizeRepository } from '@/repositories/prisma-repositories/prisma-prizes-repository'
 import { InMemoryPrizeRepository } from '@/repositories/in-memory/in-memory-prize-repository'
 import { PrizeAlreadyExistsError } from '../errors/prize-already-exists-error'
 
@@ -16,7 +15,8 @@ describe('Register Prize Service', () => {
 
         const { prize } = await registerPrizeUseCase.execute({
             name:'teste',
-            quantity: 1
+            quantity: 1,
+            code: '1'
         })
 
         expect(prize.id).toEqual(expect.any(String))
@@ -29,12 +29,14 @@ describe('Register Prize Service', () => {
 
         const { prize } = await registerPrizeUseCase.execute({
             name:'teste',
-            quantity: 1
+            quantity: 1,
+            code: '2'
         })
 
         expect(async () => await registerPrizeUseCase.execute({
             name:'teste',
-            quantity: 1
+            quantity: 1,
+            code: '3'
         })).rejects.toBeInstanceOf(PrizeAlreadyExistsError)
     })
 
