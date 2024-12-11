@@ -17,9 +17,20 @@ datasource db {
 }
 
 model Prize {
-  id       String @id @default(uuid())
-  name     String @unique
-  quantity Int
+  id        String      @id @default(uuid())
+  code      String      @unique
+  name      String      @unique
+  quantity  Int
+  DatePrize DatePrize[]
 
   @@map("prizes")
+}
+
+model DatePrize {
+  id            String   @id @default(uuid())
+  dateHourPrize DateTime
+  awarded       Boolean  @default(false)
+
+  prize      Prize  @relation(fields: [prize_code], references: [code])
+  prize_code String
 }
