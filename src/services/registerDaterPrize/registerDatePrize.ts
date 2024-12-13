@@ -3,12 +3,15 @@ import { DatePrizeAlreadyExistsError } from "../errors/dateprize-already-exists-
 
 interface RegisterDatePrizeParams{
     dateHourPrize: Date
+    prize: {
+        code: String
+    }
 }
 
 export class RegisterDatePrizeService{
     constructor (private datePrizeRepository: DatePrizeRepository){}
 
-    async execute({ dateHourPrize }: RegisterDatePrizeParams){
+    async execute({ dateHourPrize, prize }: RegisterDatePrizeParams){
 
         const sameDateHour = await this.datePrizeRepository.findByDate(dateHourPrize)
 
@@ -16,7 +19,17 @@ export class RegisterDatePrizeService{
             throw new DatePrizeAlreadyExistsError
         }
 
-        const datePrize = await this.datePrizeRepository
+        const datePrize = await this.datePrizeRepository.registerDatePrize({
+            dateHourPrize,
+            prize: {
+                connect: {
+                    code: "1"
+                }
+            }
+        })
 
+        return {
+            datePrize
+        }
     }
 }
