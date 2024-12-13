@@ -1,7 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { RegisterDatePrizeService } from "./registerDatePrize";
 import { InMemoryDatePrizeRepository } from "@/repositories/in-memory/in-memory-dateprize-repository";
-import { beforeEach } from "node:test";
 
 describe.only('Register Date Prize', () => {
 
@@ -11,12 +10,21 @@ describe.only('Register Date Prize', () => {
     beforeEach(() => {
         datePrizeRepository = new InMemoryDatePrizeRepository
         sut = new RegisterDatePrizeService(datePrizeRepository)
+
+        vi.useFakeTimers()
+    })
+
+    afterEach(() => {
+        vi.useRealTimers()
     })
 
     it('should be possible register a date prize', async  () => {
 
+        const date = new Date(2024, 9, 10,8,0,0)
+        vi.setSystemTime(date)
+
         const { datePrize } = await sut.execute({
-            dateHourPrize: new Date(),
+            dateHourPrize: date,
             prize: {
                 code: '01'
             }
