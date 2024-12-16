@@ -1,23 +1,21 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
-import { prisma } from '../../lib/prisma'
-import { RegisterPrizeService } from '@/services/registerPrize'
-import { PrismaPrizeRepository } from '@/repositories/prisma-repositories/prisma-prizes-repository'
 import { PrizeAlreadyExistsError } from '@/services/errors/prize-already-exists-error'
+import { makeRegisterPrizeService } from '@/services/factories/make-registerprize-service'
 
 export async function registerPrize(request: FastifyRequest, reply: FastifyReply){
     const registerBodySchema =  z.object({
         name: z.string(),
-        quantity: z.number().min(1)
+        quantity: z.number().min(1),
+        code: z.string()
     })
 
-    const {name, quantity} = registerBodySchema.parse(request.body)
+    const {name, quantity, code} = registerBodySchema.parse(request.body)
 
     try {
-        const prismaPrizeRepository = new PrismaPrizeRepository
-        const registerService = new RegisterPrizeService(prismaPrizeRepository)
+        const registerPrizeService = makeRegisterPrizeService()
 
-        await registerService.execute({ name, quantity })
+        await registerPrizeService.execute({ name, quantity, code })
     } catch (error) {
 
         if(error instanceof PrizeAlreadyExistsError){

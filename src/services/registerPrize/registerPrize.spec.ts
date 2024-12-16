@@ -1,19 +1,27 @@
-import { expect, describe, it, test } from 'vitest'
+import { expect, describe, it, test, vi, afterEach, beforeEach } from 'vitest'
 import { RegisterPrizeService } from './registerPrize'
 import { InMemoryPrizeRepository } from '@/repositories/in-memory/in-memory-prize-repository'
 import { PrizeAlreadyExistsError } from '../errors/prize-already-exists-error'
 
-// test('check if it works', () => {
-//     expect(2 + 2).toBe(4)
-// })
-
 describe('Register Prize Service', () => {
+    
+    let prizeRepository: InMemoryPrizeRepository
+    let sut: RegisterPrizeService
+
+    beforeEach(() => {
+        prizeRepository = new InMemoryPrizeRepository
+        sut = new RegisterPrizeService(prizeRepository)
+
+        vi.useFakeTimers()
+    })
+
+    afterEach(() => {
+        vi.useRealTimers()
+    })
 
     it('should be possible register a prize', async () => {
-        const inMemoryDatabase = new InMemoryPrizeRepository
-        const registerPrizeUseCase = new RegisterPrizeService(inMemoryDatabase)
 
-        const { prize } = await registerPrizeUseCase.execute({
+        const { prize } = await sut.execute({
             name:'teste',
             quantity: 1,
             code: '1'
