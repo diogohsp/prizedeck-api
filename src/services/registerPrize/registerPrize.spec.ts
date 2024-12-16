@@ -1,12 +1,7 @@
-import { expect, describe, it, test, vi, beforeAll } from 'vitest'
+import { expect, describe, it, test, vi, afterEach, beforeEach } from 'vitest'
 import { RegisterPrizeService } from './registerPrize'
 import { InMemoryPrizeRepository } from '@/repositories/in-memory/in-memory-prize-repository'
 import { PrizeAlreadyExistsError } from '../errors/prize-already-exists-error'
-import { beforeEach } from 'node:test'
-
-// test('check if it works', () => {
-//     expect(2 + 2).toBe(4)
-// })
 
 describe('Register Prize Service', () => {
     
@@ -20,7 +15,7 @@ describe('Register Prize Service', () => {
         vi.useFakeTimers()
     })
 
-    beforeEach(() => {
+    afterEach(() => {
         vi.useRealTimers()
     })
 

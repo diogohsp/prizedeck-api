@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { RegisterDatePrizeService } from "./registerDatePrize";
 import { InMemoryDatePrizeRepository } from "@/repositories/in-memory/in-memory-dateprize-repository";
 
-describe.only('Register Date Prize', () => {
+describe('Register Date Prize', () => {
 
     let datePrizeRepository: InMemoryDatePrizeRepository
     let sut: RegisterDatePrizeService
