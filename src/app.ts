@@ -18,5 +18,5 @@ app.setErrorHandler((error, _, reply) => {
         //TODO: here we should log to an external tool
     }
 
-    return reply.status(500).send({message: 'Internal server error!'})
+    return reply.status(500).send({message: 'Internal server error!' + `ERRO: ${error}`})
 })

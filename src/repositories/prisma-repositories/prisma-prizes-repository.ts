@@ -29,5 +29,13 @@ export class PrismaPrizeRepository implements PrizesRepository{
 
     return prize
     }
+
+    async findAll(): Promise<Prize[]> {
+        const prizes = await prisma.prize.findMany({ orderBy: {
+            code: "asc"
+        } })
+
+        return prizes
+    }
     
 }

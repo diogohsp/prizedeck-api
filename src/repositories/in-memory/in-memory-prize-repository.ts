@@ -2,7 +2,7 @@ import { Prize, Prisma } from "@prisma/client";
 import { PrizesRepository } from "../prizes-repository";
 
 export class InMemoryPrizeRepository implements PrizesRepository {
-
+    
     public items: Prize[] = []
 
     async findById(id: string): Promise<Prize | null> {
@@ -36,5 +36,13 @@ export class InMemoryPrizeRepository implements PrizesRepository {
 
         return prize
     }
+
+    async findAll(): Promise<Prize[]> {
+        
+        const allItems = this.items
+
+        return allItems
+    }
+
 
 }
