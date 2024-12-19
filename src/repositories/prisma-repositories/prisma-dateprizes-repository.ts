@@ -30,4 +30,38 @@ export class PrismaDatePrizeRepository implements DatePrizeRepository{
         return allItems
     }
 
+    async findAllNotAwarded(): Promise<DatePrize[]> {
+        const allNotAwarded = await prisma.datePrize.findMany({
+            where: {
+                awarded: false
+            }
+        })
+
+        return allNotAwarded
+    }
+
+    async findPrizeAwarded(id: string): Promise<DatePrize | null> {
+        const prizeAwarded = await prisma.datePrize.findUnique({
+            where:{
+                id: id,
+                awarded: true,
+            },
+        })
+
+        return prizeAwarded
+    }
+    
+    async winPrize(id: string): Promise<DatePrize> {
+        const prizeWon = await prisma.datePrize.update({
+            where: {
+                id: id
+            },
+            data: {
+                awarded: true
+            }
+        })
+
+        return prizeWon
+    }
+
 }

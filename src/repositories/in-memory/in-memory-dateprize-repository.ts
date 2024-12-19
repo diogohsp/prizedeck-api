@@ -3,7 +3,7 @@ import { DatePrizeRepository } from "../dateprizes-repository";
 
 export class InMemoryDatePrizeRepository implements DatePrizeRepository{
     
-    private items: DatePrize[] = []
+    public items: DatePrize[] = []
 
     async findByDate(date: Date): Promise<DatePrize | null> {
         const datePrize = this.items.find(item => item.dateHourPrize === date)
@@ -34,5 +34,32 @@ export class InMemoryDatePrizeRepository implements DatePrizeRepository{
         const allItems = this.items
 
         return allItems
+    }
+
+    async findAllNotAwarded(): Promise<DatePrize[]> {
+        const allItemsNotAwarded = this.items.filter(item => item.awarded === false)
+
+        return allItemsNotAwarded
+    }
+
+    async findPrizeAwarded(id: string): Promise<DatePrize | null> {
+        const prize = this.items.find(item => item.id === id && item.awarded === true) || null
+
+        return prize
+    }
+    
+    async winPrize(id: string): Promise<DatePrize | null> {
+        
+        const itemsUpdated = this.items.map(item => {
+            if(item.id === id  && item.awarded === false){
+                return {...item, awarded: true}
+            }else {
+                return item;
+            }
+        })
+
+        const updatedItem = itemsUpdated.find(item => item.id === id && item.awarded === true) || null
+
+        return updatedItem
     }
 }

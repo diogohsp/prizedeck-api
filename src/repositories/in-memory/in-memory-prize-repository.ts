@@ -43,6 +43,4 @@ export class InMemoryPrizeRepository implements PrizesRepository {
 
         return allItems
     }
-
-
 }

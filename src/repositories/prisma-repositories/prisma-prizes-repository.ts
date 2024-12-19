@@ -12,6 +12,7 @@ export class PrismaPrizeRepository implements PrizesRepository{
 
         return prize
     }
+    
     async findByName(name: string): Promise<Prize | null> {
         const prize = await prisma.prize.findUnique({
             where: {
