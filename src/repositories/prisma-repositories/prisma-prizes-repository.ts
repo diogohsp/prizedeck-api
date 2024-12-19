@@ -12,6 +12,7 @@ export class PrismaPrizeRepository implements PrizesRepository{
 
         return prize
     }
+    
     async findByName(name: string): Promise<Prize | null> {
         const prize = await prisma.prize.findUnique({
             where: {
@@ -28,6 +29,14 @@ export class PrismaPrizeRepository implements PrizesRepository{
     })
 
     return prize
+    }
+
+    async findAll(): Promise<Prize[]> {
+        const prizes = await prisma.prize.findMany({ orderBy: {
+            code: "asc"
+        } })
+
+        return prizes
     }
     
 }
