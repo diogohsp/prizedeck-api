@@ -7,14 +7,9 @@ import fastifyCors from "@fastify/cors";
 export const app = fastify()
 
 app.register(fastifyCors, {
-    origin: (origin, cb) => {
-        if (!origin || origin === "http://localhost:3333") {
-            cb(null, true);
-            return;
-        }
-        cb(new Error("Not allowed by CORS"), false);
-    }
-})
+    origin: '*',
+    credentials: true,
+});
 
 app.register(appRoutes)
 
