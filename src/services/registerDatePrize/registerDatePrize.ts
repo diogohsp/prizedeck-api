@@ -4,7 +4,7 @@ import { DatePrizeAlreadyExistsError } from "../errors/dateprize-already-exists-
 interface RegisterDatePrizeParams{
     dateHourPrize: Date | string
     prize: {
-        code: string
+        code: number
     }
 }
 
