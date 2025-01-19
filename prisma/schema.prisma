@@ -18,7 +18,7 @@ datasource db {
 
 model Prize {
   id        String      @id @default(uuid())
-  code      String      @unique
+  code      Int         @unique @default(autoincrement())
   name      String      @unique
   quantity  Int
   DatePrize DatePrize[]
@@ -31,6 +31,6 @@ model DatePrize {
   dateHourPrize DateTime @unique
   awarded       Boolean  @default(false)
 
-  prize      Prize  @relation(fields: [prize_code], references: [code])
-  prize_code String
+  prize      Prize @relation(fields: [prize_code], references: [code])
+  prize_code Int
 }

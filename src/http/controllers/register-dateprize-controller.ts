@@ -7,7 +7,7 @@ export async function registerDatePrize(request: FastifyRequest, reply: FastifyR
     const registerDatePrizeBodySchema = z.object({
         dateHourPrize: z.union([z.string(), z.date()]),
         prize: z.object({
-            code: z.string().min(1, 'The code of prize is mandatory!'),
+            code: z.number().min(1, 'The code of prize is mandatory!'),
         }),
     })
 

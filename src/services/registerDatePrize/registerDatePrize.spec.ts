@@ -26,7 +26,7 @@ describe('Register Date Prize', () => {
         const { datePrize } = await sut.execute({
             dateHourPrize: date,
             prize: {
-                code: '01'
+                code: 1
             }
         })
         

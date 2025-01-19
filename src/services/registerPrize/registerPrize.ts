@@ -5,7 +5,6 @@ import { Prize } from "@prisma/client"
 interface RegisterPrizeServiceParams{
     name: string
     quantity: number
-    code: string
 }
 
 interface RegisterPrizeServiceResponse{
@@ -16,7 +15,7 @@ export class RegisterPrizeService{
 
     constructor(private prizesRepository: PrizesRepository){}
 
-    async execute({ name, quantity, code }: RegisterPrizeServiceParams): Promise<RegisterPrizeServiceResponse> {
+    async execute({ name, quantity }: RegisterPrizeServiceParams): Promise<RegisterPrizeServiceResponse> {
     
         const prizeWithSameName = await this.prizesRepository.findByName(name)
     
@@ -26,8 +25,7 @@ export class RegisterPrizeService{
     
         const prize = await this.prizesRepository.registerPrize({
             name,
-            quantity,
-            code
+            quantity
         })
 
         return {

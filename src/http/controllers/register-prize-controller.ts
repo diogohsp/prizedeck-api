@@ -6,16 +6,15 @@ import { makeRegisterPrizeService } from '@/services/factories/make-registerpriz
 export async function registerPrize(request: FastifyRequest, reply: FastifyReply){
     const registerBodySchema =  z.object({
         name: z.string(),
-        quantity: z.number().min(1),
-        code: z.string()
+        quantity: z.number().min(1)
     })
 
-    const {name, quantity, code} = registerBodySchema.parse(request.body)
+    const {name, quantity} = registerBodySchema.parse(request.body)
 
     try {
         const registerPrizeService = makeRegisterPrizeService()
 
-        await registerPrizeService.execute({ name, quantity, code })
+        await registerPrizeService.execute({ name, quantity })
     } catch (error) {
 
         if(error instanceof PrizeAlreadyExistsError){
