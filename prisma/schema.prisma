@@ -16,6 +16,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id            String   @id @default(uuid())
+  name          String
+  email         String   @unique
+  role          Role     @default(USER)
+  password_hash String
+  created_at    DateTime @default(now())
+
+  @@map("users")
+}
+
 model Prize {
   id        String      @id @default(uuid())
   code      Int         @unique @default(autoincrement())
