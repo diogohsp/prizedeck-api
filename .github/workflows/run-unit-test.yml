@@ -9,10 +9,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      # Setup Node.js with the correct version
       - uses: actions/setup-node@v3
         with:
           node-version: 22.13.1
-          cache: "pnpm"
 
+      - run: npm install -g pnpm
       - run: pnpm ci
       - run: pnpm test
