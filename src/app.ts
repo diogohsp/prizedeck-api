@@ -6,6 +6,7 @@ import { prizesRoutes } from "./http/controllers/prizes/routes";
 import { datePrizesRoutes } from "./http/controllers/dateprizes/routes";
 import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
+import { userRoutes } from "./http/controllers/users/routes";
 
 export const app = fastify()
 
@@ -25,8 +26,9 @@ app.register(fastifyJwt, {
     },
   })
   
-  app.register(fastifyCookie)
+app.register(fastifyCookie)
 
+app.register(userRoutes)
 app.register(prizesRoutes)
 app.register(datePrizesRoutes)
 

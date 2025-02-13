@@ -2,17 +2,17 @@
 /* eslint-disable no-use-before-define */
 import { expect, describe, it, beforeEach } from 'vitest'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
-import { AuthenticateUseCase } from './authenticate'
+import { AuthenticateService } from './authenticate'
 import { hash } from 'bcryptjs'
 import { InvalidCredentialsError } from '../errors/invalid-credentials-errors'
 
 // Unit test
 let usersRepository: InMemoryUsersRepository
-let sut: AuthenticateUseCase
+let sut: AuthenticateService
 describe('Authenticate Use Case', () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
-    sut = new AuthenticateUseCase(usersRepository) // System Under Test
+    sut = new AuthenticateService(usersRepository) // System Under Test
   })
   it('should be able to authenticate', async () => {
     await usersRepository.create({

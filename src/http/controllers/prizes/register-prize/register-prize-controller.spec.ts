@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { createAndAunthenticateUser } from '@/utils/create-and-authenticate-user'
 import { prisma } from '@/lib/prisma'
 
-describe('Register date prize (e2e)', () => {
+describe('Register a prize (e2e)', () => {
     beforeAll(async () => {
         await app.ready()
     })
@@ -13,27 +13,17 @@ describe('Register date prize (e2e)', () => {
         await app.close()
     })
 
-    it('should be able to register a dateprize', async () => {
+    it('should be able to register a prize', async () => {
         const { token } = await createAndAunthenticateUser(app, true)
 
-        await prisma.prize.create({
-            data: {
+        const response = await request(app.server)
+        .post('/prizes')
+        .set('Authorization', `Bearer ${token}`)
+        .send({
                 name: 'test',
                 quantity: 1,
                 code: 1
-            }
-        })
-
-        const response = await request(app.server)
-        .post('/dateprizes')
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-            dateHourPrize: "2025-10-10T08:00:00.000Z",
-            prize: {
-              code: 1
-            }
-          }
-          )
+            })
 
         expect(response.statusCode).toEqual(201)
     })
