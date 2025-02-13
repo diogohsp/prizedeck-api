@@ -1,10 +1,10 @@
 import { PrismaDatePrizeRepository } from "@/repositories/prisma-repositories/prisma-dateprizes-repository"
-import { WinPrize } from "../winPrize/winPrize"
+import { WinPrizeService } from "../winPrize/winPrize"
 
 export function makeWinPrizeService(){
     const prismaDatePrizeRepository = new PrismaDatePrizeRepository
-    const winPrizeService = new WinPrize(prismaDatePrizeRepository)
+    const service = new WinPrizeService(prismaDatePrizeRepository)
 
-    return winPrizeService
+    return service
 
 }

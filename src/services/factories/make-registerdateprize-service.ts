@@ -3,7 +3,7 @@ import { RegisterDatePrizeService } from "../registerDatePrize/registerDatePrize
 
 export function makeRegisterDatePrizeService(){
     const prismaDatePrizeRepository = new PrismaDatePrizeRepository
-    const registerDatePrizeService = new RegisterDatePrizeService(prismaDatePrizeRepository)
+    const service = new RegisterDatePrizeService(prismaDatePrizeRepository)
 
-    return registerDatePrizeService
+    return service
 }

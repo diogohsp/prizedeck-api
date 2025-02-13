@@ -3,7 +3,7 @@ import { RegisterPrizeService } from "../registerPrize/registerPrize"
 
 export function makeRegisterPrizeService(){
     const prismaPrizeRepository = new PrismaPrizeRepository
-    const registerPrizeService = new RegisterPrizeService(prismaPrizeRepository)
+    const service = new RegisterPrizeService(prismaPrizeRepository)
 
-    return registerPrizeService
+    return service
 }

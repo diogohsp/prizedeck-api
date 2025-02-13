@@ -11,7 +11,7 @@ interface WinPrizeResponse{
     datePrize: DatePrize | null
 }
 
-export class WinPrize{
+export class WinPrizeService{
 
     constructor(private datePrizesRepository: DatePrizeRepository){}
 

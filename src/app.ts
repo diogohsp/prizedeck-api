@@ -1,8 +1,11 @@
 import fastify from "fastify";
-import { appRoutes } from "./http/routes";
 import { ZodError } from "zod";
 import { env } from "./env";
 import fastifyCors from "@fastify/cors";
+import { prizesRoutes } from "./http/controllers/prizes/routes";
+import { datePrizesRoutes } from "./http/controllers/dateprizes/routes";
+import fastifyJwt from '@fastify/jwt'
+import fastifyCookie from '@fastify/cookie'
 
 export const app = fastify()
 
@@ -11,7 +14,21 @@ app.register(fastifyCors, {
     credentials: true,
 });
 
-app.register(appRoutes)
+app.register(fastifyJwt, {
+    secret: env.JWT_SECRET,
+    cookie: {
+      cookieName: 'refreshToken',
+      signed: false,
+    },
+    sign: {
+      expiresIn: '10m',
+    },
+  })
+  
+  app.register(fastifyCookie)
+
+app.register(prizesRoutes)
+app.register(datePrizesRoutes)
 
 app.setErrorHandler((error, _, reply) => {
     if(error instanceof ZodError){

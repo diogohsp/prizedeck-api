@@ -4,7 +4,7 @@ import { ListRegisterdDatePrizes } from "../listRegisteredDatePrizes/listRegiste
 
 export function makeListRegisteredDatePrizeService(){
     const prismaPrizeRepository = new PrismaDatePrizeRepository
-    const listRegisteredDatePrizesService = new ListRegisterdDatePrizes(prismaPrizeRepository)
+    const service = new ListRegisterdDatePrizes(prismaPrizeRepository)
 
-    return listRegisteredDatePrizesService
+    return service
 }
