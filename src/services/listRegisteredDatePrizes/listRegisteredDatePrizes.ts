@@ -8,8 +8,15 @@ interface ListRegisteredDatePrizesResponse {
 export class ListRegisterdDatePrizes{
     constructor(private datePrizesRepository: DatePrizeRepository){}
 
-    async execute(): Promise<ListRegisteredDatePrizesResponse>{
-        const datePrizes = await this.datePrizesRepository.findAll()
+    async execute({ awarded } : {awarded?: string}): Promise<ListRegisteredDatePrizesResponse>{
+        let datePrizes
+        if(awarded){
+            console.log('not awarded')
+            datePrizes = await this.datePrizesRepository.findAllNotAwarded()
+        } else {
+            console.log('sem filtro')
+            datePrizes = await this.datePrizesRepository.findAll()
+        }  
 
         return {
             datePrizes: datePrizes

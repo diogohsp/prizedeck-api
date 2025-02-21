@@ -5,7 +5,6 @@ import { winPrize } from "./win-prize/win-prize-controller";
 import { helloWorld } from "../hello-world-controller";
 import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
-import { drawPrize } from "./draw-prize/draw-prize-controller";
     
 export async function prizesRoutes(app: FastifyInstance){
 
@@ -16,6 +15,6 @@ export async function prizesRoutes(app: FastifyInstance){
     app.post('/prizes',{onRequest: [verifyUserRole('ADMIN')]}, registerPrize)
     app.get('/prizes', listRegisteredPrizes)
     app.patch('/winprize', winPrize)
-    app.patch('/drawprize', drawPrize)
+
     
 }

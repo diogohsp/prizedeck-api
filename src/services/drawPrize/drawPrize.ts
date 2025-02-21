@@ -9,15 +9,18 @@ interface DrawPrizeParams{
 
 export interface DrawPrizeResponse{
     datePrize: DatePrize | null
+    prize: Prize
 }
 
 export class DrawPrizeService{
 
-    constructor(private datePrizesRepository: DatePrizeRepository){}
+    constructor(private datePrizesRepository: DatePrizeRepository, private prizesRepository: PrizesRepository){}
 
     async execute({ prize_id }: DrawPrizeParams): Promise<DrawPrizeResponse | null> {
+
+        console.log('ID QUE CHEGOU: ', prize_id)
         
-        const prizesList = await this.datePrizesRepository.findAll
+        // const prizesList = await this.datePrizesRepository.findAll
 
         const randomNumberOneToTen = Math.floor(Math.random() * 9) + 1
 
@@ -27,15 +30,24 @@ export class DrawPrizeService{
 
             const prizeAwarded = await this.datePrizesRepository.findPrizeAwarded(prize_id)
          
-            if(prizeAwarded){
-                throw new DatePrizeAlreadyAwardedError
+            if(prizeAwarded?.awarded){
+                console.log('cai no erro')
+                throw new DatePrizeAlreadyAwardedError()
             }
 
-            const datePrize = await this.datePrizesRepository.winPrize(prize_id) 
+            const datePrize = await this.datePrizesRepository.winPrize(prize_id)
 
-            return {
-                datePrize
+            const prize = await this.prizesRepository.findPrizeCode(datePrize!.prize_code);
+
+            console.log('ganhei: ', datePrize)
+
+            if(prize){
+                return {
+                    datePrize, prize
+                }
             }
+
+            return null
         } else {
             return null
         }

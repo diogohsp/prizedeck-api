@@ -13,9 +13,11 @@ export async function drawPrize(request: FastifyRequest, reply: FastifyReply){
     try {
         const drawPrizeService = makeDrawPrizeService()
 
-        await drawPrizeService.execute({ prize_id: id })
+        const prize = await drawPrizeService.execute({ prize_id: id })
 
-        return reply.status(200).send()
+        console.log('CONTROLLER: ', prize)
+
+        return reply.status(200).send(prize != null ? prize : null)
     } catch (error) {
 
         if(error instanceof DatePrizeAlreadyAwardedError){

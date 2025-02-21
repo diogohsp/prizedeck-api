@@ -12,6 +12,16 @@ export class PrismaPrizeRepository implements PrizesRepository{
 
         return prize
     }
+
+     async findPrizeCode(code: number): Promise<Prize | null> {
+            const prizeCode = await prisma.prize.findUnique({
+                where:{
+                    code: code,
+                },
+            })
+    
+            return prizeCode
+        }
     
     async findByName(name: string): Promise<Prize | null> {
         const prize = await prisma.prize.findUnique({

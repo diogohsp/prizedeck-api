@@ -3,11 +3,12 @@ import { registerDatePrize } from "./register-dateprize/register-dateprize-contr
 import { listRegisteredDatePrizes } from "./list-registered-dateprizes/list-registered-dateprizes-controller";
 import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
+import { drawPrize } from "./draw-prize/draw-prize-controller";
 
 export async function datePrizesRoutes(app: FastifyInstance){
     app.addHook('onRequest', verifyJWT)
 
     app.post('/dateprizes', {onRequest: [verifyUserRole('ADMIN')]}, registerDatePrize)
     app.get('/dateprizes', listRegisteredDatePrizes)
-
+    app.patch('/drawprize', drawPrize)
 }

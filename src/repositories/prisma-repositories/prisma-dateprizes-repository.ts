@@ -1,9 +1,12 @@
-import { DatePrize, Prisma } from "@prisma/client";
+import { DatePrize, Prisma, Prize } from "@prisma/client";
 import { DatePrizeRepository } from "../dateprizes-repository";
 import { prisma } from "@/lib/prisma";
 
 export class PrismaDatePrizeRepository implements DatePrizeRepository{
-
+    findAwarded(): Promise<DatePrize[]> {
+        throw new Error("Method not implemented.");
+    }
+    
     async registerDatePrize(data: Prisma.DatePrizeCreateInput): Promise<DatePrize> {
         const prizeDate = await prisma.datePrize.create({
             data: data
@@ -32,6 +35,9 @@ export class PrismaDatePrizeRepository implements DatePrizeRepository{
 
     async findAllNotAwarded(): Promise<DatePrize[]> {
         const allNotAwarded = await prisma.datePrize.findMany({
+            orderBy: {
+                dateHourPrize: "asc"
+            },
             where: {
                 awarded: false
             }
@@ -51,7 +57,7 @@ export class PrismaDatePrizeRepository implements DatePrizeRepository{
         return prizeAwarded
     }
     
-    async winPrize(id: string): Promise<DatePrize> {
+    async winPrize(id: string): Promise<DatePrize | null> {
         const prizeWon = await prisma.datePrize.update({
             where: {
                 id: id
@@ -62,6 +68,7 @@ export class PrismaDatePrizeRepository implements DatePrizeRepository{
         })
 
         return prizeWon
+
     }
 
 }
